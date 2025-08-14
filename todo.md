@@ -60,7 +60,6 @@
 - [ ] Implementar categorias pré-definidas (Medicina Interna, Cirurgia, Pediatria, Gineco e Obstetriz, Perguntas do Grado).
 - [ ] Criar sistema de estudo com animações.
 - [ ] Implementar visualização em grade e lista.
-- [ ] Adicionar preview dos cards durante a criação.
 
 ### Fase 7: Integração com sistema de pagamento Mercado Pago
 - [ ] Integrar com a API do Mercado Pago.
