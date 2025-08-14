@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
+import HomePage from './pages/HomePage'; // Importe o componente HomePage
 import TestTimer from './components/TestTimer'; // Importe o componente TestTimer
 
 function App() {
@@ -18,8 +19,8 @@ function App() {
 
         <Routes>
           <Route path="/login" element={<LoginPage />} />
-          {/* Adicione outras rotas aqui conforme o projeto avança */}
-          <Route path="/" element={<LoginPage />} /> {/* Rota padrão para a página de login */}
+          <Route path="/home" element={<HomePage />} /> {/* Nova rota para a página inicial */}
+          <Route path="/" element={<HomePage />} /> {/* Rota padrão para a página inicial */}
         </Routes>
       </div>
     </Router>

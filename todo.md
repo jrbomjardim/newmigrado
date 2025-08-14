@@ -22,12 +22,12 @@
 - [x] Adicionar contador de tempo de teste no topo do site.
 
 ### Fase 4: Desenvolvimento da interface moderna com glassmorphism
-- [ ] Redesenhar a página inicial com design glassmorphism.
-- [ ] Adicionar elementos flutuantes animados no background.
-- [ ] Criar cards com efeito de vidro fosco (backdrop-filter).
-- [ ] Implementar animações suaves de entrada (slideUp, pulse).
-- [ ] Adicionar hover effects e micro-interações.
-- [ ] Otimizar o design responsivo para mobile.
+- [x] Redesenhar a página inicial com design glassmorphism
+- [x] Adicionar elementos flutuantes animados no background
+- [x] Criar cards com efeito de vidro fosco (backdrop-filter)
+- [x] Animações suaves de entrada (slideUp, pulse)
+- [x] Hover effects e micro-interações
+- [ ] Otimizar o design responsivo para mobile
 
 ### Fase 5: Implementação do dashboard com estatísticas e gráficos
 - [ ] Desenvolver a interface do dashboard baseada no design fornecido.
