@@ -14,7 +14,7 @@ CORS(app, resources={r"/api/*": {"origins": "*"}})
 app.register_blueprint(user_bp, url_prefix='/api')
 
 # Configuração do banco de dados para PostgreSQL
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'postgresql://flashcards_user:@localhost/flashcards_db')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'postgresql://flashcards_user:your_secure_password@localhost/flashcards_db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 
