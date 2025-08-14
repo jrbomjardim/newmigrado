@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Migrado - Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <style>
+        .hero-bg {
+            background: linear-gradient(135deg, #1e1b4b 0%, #7c3aed 50%, #ec4899 100%);
+        }
+        .card-gradient-blue {
+            background: linear-gradient(135deg, #4F46E5 0%, #6366F1 100%);
+        }
+        .card-gradient-green {
+            background: linear-gradient(135deg, #10B981 0%, #34D399 100%);
+        }
+        .card-gradient-purple {
+            background: linear-gradient(135deg, #8B5CF6 0%, #A78BFA 100%);
+        }
+        .card-gradient-cyan {
+            background: linear-gradient(135deg, #06B6D4 0%, #22D3EE 100%);
+        }
+        .notification {
+            transform: translateX(100%);
+            transition: all 0.3s ease-in-out;
+        }
+        .notification.show {
+            transform: translateX(0);
+        }
+        .notification.hide {
+            transform: translateX(100%);
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans">
+    <!-- Notification Container -->
+    <div id="notification-container" class="fixed top-4 right-4 z-50 space-y-2 max-w-sm">
+        <!-- Notifications will be dynamically added here -->
+    </div>
+
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <i data-lucide="stethoscope" class="w-8 h-8 text-indigo-600 mr-3"></i>
+                    <h1 class="text-2xl font-bold text-gray-900">Migrado</h1>
+                </div>
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#" class="text-gray-900 font-semibold flex items-center px-3 py-2 rounded-md bg-gray-200">
+                        <i data-lucide="layout-dashboard" class="w-5 h-5 mr-2"></i> Dashboard
+                    </a>
+                    <a href="#" class="text-gray-600 hover:text-gray-900 flex items-center px-3 py-2 rounded-md">
+                        <i data-lucide="book-open" class="w-5 h-5 mr-2"></i> Estudar
+                    </a>
+                    <a href="#" class="text-gray-600 hover:text-gray-900 flex items-center px-3 py-2 rounded-md">
+                        <i data-lucide="library" class="w-5 h-5 mr-2"></i> Meus Cards
+                    </a>
+                    <a href="#" class="text-gray-600 hover:text-gray-900 flex items-center px-3 py-2 rounded-md">
+                        <i data-lucide="users" class="w-5 h-5 mr-2"></i> Comunidade
+                    </a>
+                </nav>
+                <div class="flex items-center space-x-4">
+                    <!-- Timer no Dashboard -->
+                    <div id="timer" class="bg-gray-800 bg-opacity-75 text-white px-3 py-1 rounded-lg text-xs font-semibold">
+                        Tempo restante: <span id="countdown">24:00:00</span>
+                    </div>
+                    <div class="relative">
+                        <button class="flex items-center space-x-2 focus:outline-none">
+                            <div class="w-8 h-8 rounded-full bg-indigo-500 flex items-center justify-center text-white font-bold">J</div>
+                            <span class="text-gray-900 font-medium hidden md:block">João Silva</span>
+                            <i data-lucide="chevron-down" class="w-4 h-4 text-gray-600"></i>
+                        </button>
+                    </div>
+                    <button class="text-gray-600 hover:text-gray-900">
+                        <i data-lucide="log-out" class="w-5 h-5"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+        <div class="px-4 py-6 sm:px-0">
+            <h2 class="text-3xl font-bold text-gray-900 mb-2">Bem-vindo de volta, João Silva!</h2>
+            <p class="text-gray-600 mb-8">Continue seus estudos médicos onde parou</p>
+
+            <!-- Stats Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                <div class="card-gradient-blue text-white p-6 rounded-lg shadow-md flex items-center justify-between">
+                    <div>
+                        <p class="text-sm opacity-80">Cards Estudados</p>
+                        <h3 class="text-3xl font-bold">127</h3>
+                    </div>
+                    <i data-lucide="brain" class="w-10 h-10 opacity-70"></i>
+                </div>
+                <div class="card-gradient-green text-white p-6 rounded-lg shadow-md flex items-center justify-between">
+                    <div>
+                        <p class="text-sm opacity-80">Sequência</p>
+                        <h3 class="text-3xl font-bold">7 dias</h3>
+                    </div>
+                    <i data-lucide="zap" class="w-10 h-10 opacity-70"></i>
+                </div>
+                <div class="card-gradient-purple text-white p-6 rounded-lg shadow-md flex items-center justify-between">
+                    <div>
+                        <p class="text-sm opacity-80">Precisão</p>
+                        <h3 class="text-3xl font-bold">89%</h3>
+                    </div>
+                    <i data-lucide="target" class="w-10 h-10 opacity-70"></i>
+                </div>
+                <div class="card-gradient-cyan text-white p-6 rounded-lg shadow-md flex items-center justify-between">
+                    <div>
+                        <p class="text-sm opacity-80">Meta Diária</p>
+                        <h3 class="text-3xl font-bold">15/20</h3>
+                    </div>
+                    <i data-lucide="award" class="w-10 h-10 opacity-70"></i>
+                </div>
+            </div>
+
+            <!-- Quick Actions & Recent Activity -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Quick Actions -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+                        <i data-lucide="bookmark" class="w-6 h-6 mr-2 text-gray-600"></i> Ações Rápidas
+                    </h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <button class="bg-indigo-600 text-white py-4 rounded-lg font-semibold hover:bg-indigo-700 flex items-center justify-center space-x-2">
+                            <i data-lucide="book-open" class="w-6 h-6"></i>
+                            <span>Estudar</span>
+                        </button>
+                        <button class="border-2 border-dashed border-gray-300 text-gray-600 py-4 rounded-lg font-semibold hover:border-indigo-400 hover:text-indigo-600 flex items-center justify-center space-x-2">
+                            <i data-lucide="plus" class="w-6 h-6"></i>
+                            <span>Criar Novo Card</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+                        <i data-lucide="history" class="w-6 h-6 mr-2 text-gray-600"></i> Atividade Recente
+                    </h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-center text-gray-700">
+                            <span class="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
+                            Estudou Cardiologia <span class="text-gray-500 ml-auto text-sm">2 horas atrás</span>
+                        </li>
+                        <li class="flex items-center text-gray-700">
+                            <span class="w-2 h-2 bg-green-500 rounded-full mr-3"></span>
+                            Criou 3 novos cards <span class="text-gray-500 ml-auto text-sm">1 dia atrás</span>
+                        </li>
+                        <li class="flex items-center text-gray-700">
+                            <span class="w-2 h-2 bg-purple-500 rounded-full mr-3"></span>
+                            Entrou no grupo "Anatomia" <span class="text-gray-500 ml-auto text-sm">2 dias atrás</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t py-6 mt-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-500 text-sm">
+            © 2025 Migrado. Todos os direitos reservados.
+        </div>
+    </footer>
+
+    <script>
+        // Sistema de Notificações (copiado do index.html)
+        function showNotification(message, type = 'info', duration = 5000) {
+            const container = document.getElementById('notification-container');
+            const notificationId = 'notification-' + Date.now();
+            
+            let bgColor, textColor, iconName;
+            switch(type) {
+                case 'success':
+                    bgColor = 'bg-green-500';
+                    textColor = 'text-white';
+                    iconName = 'check-circle';
+                    break;
+                case 'error':
+                    bgColor = 'bg-red-500';
+                    textColor = 'text-white';
+                    iconName = 'x-circle';
+                    break;
+                case 'warning':
+                    bgColor = 'bg-yellow-500';
+                    textColor = 'text-white';
+                    iconName = 'alert-triangle';
+                    break;
+                case 'trial':
+                    bgColor = 'bg-orange-500';
+                    textColor = 'text-white';
+                    iconName = 'clock';
+                    break;
+                default:
+                    bgColor = 'bg-blue-500';
+                    textColor = 'text-white';
+                    iconName = 'info';
+            }
+            
+            const notification = document.createElement('div');
+            notification.id = notificationId;
+            notification.className = `notification ${bgColor} ${textColor} p-4 rounded-lg shadow-lg flex items-center space-x-3 min-w-80`;
+            
+            notification.innerHTML = `
+                <i data-lucide="${iconName}" class="w-5 h-5 flex-shrink-0"></i>
+                <span class="flex-1">${message}</span>
+                <button onclick="hideNotification('${notificationId}')" class="flex-shrink-0 hover:opacity-75">
+                    <i data-lucide="x" class="w-4 h-4"></i>
+                </button>
+            `;
+            
+            container.appendChild(notification);
+            
+            lucide.createIcons();
+            
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 100);
+            
+            setTimeout(() => {
+                hideNotification(notificationId);
+            }, duration);
+        }
+
+        function hideNotification(notificationId) {
+            const notification = document.getElementById(notificationId);
+            if (notification) {
+                notification.classList.remove('show');
+                notification.classList.add('hide');
+                setTimeout(() => {
+                    notification.remove();
+                }, 300);
+            }
+        }
+
+        // Timer functions (copiado do index.html e adaptado para o dashboard)
+        let timerInterval = null;
+        let trialStartTime = null;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            lucide.createIcons();
+            
+            const savedTrialStart = localStorage.getItem('trialStartTime');
+            if (savedTrialStart) {
+                trialStartTime = parseInt(savedTrialStart);
+                startTimer();
+            } else {
+                // Se não houver trialStartTime, o usuário não está logado ou o teste expirou
+                // Redirecionar para a página de login ou exibir mensagem
+                // showNotification('Seu período de teste não está ativo. Faça login para iniciar.', 'warning');
+            }
+        });
+
+        function startTimer() {
+            if (timerInterval) {
+                clearInterval(timerInterval);
+            }
+            
+            const countdownElement = document.getElementById('countdown');
+            
+            function updateTimer() {
+                if (!trialStartTime) return;
+                
+                const now = Date.now();
+                const elapsed = Math.floor((now - trialStartTime) / 1000);
+                const remaining = Math.max(0, (24 * 60 * 60) - elapsed);
+                
+                const hours = Math.floor(remaining / 3600);
+                const minutes = Math.floor((remaining % 3600) / 60);
+                const seconds = remaining % 60;
+                
+                countdownElement.textContent = 
+                    `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                if (remaining <= 0) {
+                    clearInterval(timerInterval);
+                    showNotification('Seu período de teste expirou! Faça upgrade para continuar usando a plataforma.', 'warning', 10000);
+                    localStorage.removeItem('trialStartTime');
+                    // Redirecionar para login ou desabilitar funcionalidades
+                }
+                
+                // Avisos de tempo restante
+                if (remaining === 3600) { // 1 hora restante
+                    showNotification('Atenção: Resta apenas 1 hora do seu período de teste!', 'warning', 8000);
+                } else if (remaining === 1800) { // 30 minutos restantes
+                    showNotification('Atenção: Restam apenas 30 minutos do seu período de teste!', 'warning', 8000);
+                } else if (remaining === 300) { // 5 minutos restantes
+                    showNotification('Atenção: Restam apenas 5 minutos do seu período de teste!', 'error', 10000);
+                }
+            }
+            
+            updateTimer();
+            timerInterval = setInterval(updateTimer, 1000);
+        }
+
+        // Mock de dados para o dashboard (substituir por dados reais do backend)
+        const mockData = {
+            cardsEstudados: 127,
+            sequenciaDias: 7,
+            precisao: 89,
+            metaDiaria: { current: 15, total: 20 },
+            atividadeRecente: [
+                { text: 'Estudou Cardiologia', time: '2 horas atrás', type: 'blue' },
+                { text: 'Criou 3 novos cards', time: '1 dia atrás', type: 'green' },
+                { text: 'Entrou no grupo "Anatomia"', time: '2 dias atrás', type: 'purple' },
+            ]
+        };
+
+        // Renderizar dados mockados no dashboard (exemplo, pode ser mais complexo com React/Vue)
+        document.addEventListener('DOMContentLoaded', function() {
+            // Atualizar os números dos cards de estatísticas
+            document.querySelector('.card-gradient-blue h3').textContent = mockData.cardsEstudados;
+            document.querySelector('.card-gradient-green h3').textContent = mockData.sequenciaDias + ' dias';
+            document.querySelector('.card-gradient-purple h3').textContent = mockData.precisao + '%';
+            document.querySelector('.card-gradient-cyan h3').textContent = mockData.metaDiaria.current + '/' + mockData.metaDiaria.total;
+
+            // Atualizar atividade recente
+            const activityList = document.querySelector('.bg-white ul');
+            activityList.innerHTML = ''; // Limpar lista existente
+            mockData.atividadeRecente.forEach(activity => {
+                const listItem = document.createElement('li');
+                listItem.className = 'flex items-center text-gray-700';
+                let dotColor;
+                switch(activity.type) {
+                    case 'blue': dotColor = 'bg-blue-500'; break;
+                    case 'green': dotColor = 'bg-green-500'; break;
+                    case 'purple': dotColor = 'bg-purple-500'; break;
+                    default: dotColor = 'bg-gray-500';
+                }
+                listItem.innerHTML = `
+                    <span class="w-2 h-2 ${dotColor} rounded-full mr-3"></span>
+                    ${activity.text} <span class="text-gray-500 ml-auto text-sm">${activity.time}</span>
+                `;
+                activityList.appendChild(listItem);
+            });
+        });
+    </script>
+</body>
+</html>
+
