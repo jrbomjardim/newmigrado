@@ -12,11 +12,11 @@
 - [x] Criar um `README.md` inicial com a arquitetura do projeto.
 
 ### Fase 3: Implementação do sistema de autenticação e usuários
-- [ ] Desenvolver o backend para cadastro e login de usuários.
-- [ ] Implementar a interface de login moderna com design glassmorphism.
-- [ ] Adicionar animações e micro-interações na tela de login.
-- [ ] Implementar validação visual de formulários.
-- [ ] Adicionar toggle de visualização de senha.
+- [x] Desenvolver o backend para cadastro e login de usuários.
+- [x] Implementar a interface de login moderna com design glassmorphism.
+- [x] Adicionar animações e micro-interações na tela de login.
+- [x] Implementar validação visual de formulários.
+- [x] Adicionar toggle de visualização de senha.
 - [ ] Configurar período de teste gratuito de 24 horas.
 - [ ] Implementar sistema de níveis de acesso (usuário e administrador).
 - [ ] Adicionar contador de tempo de teste no topo do site.
