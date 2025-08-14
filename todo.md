@@ -43,7 +43,7 @@
 - [x] Testar dashboard funcionando na VPS
 
 ### Fase 6: Implementação do sistema de flashcards
-- [ ] Criar backend Flask com banco de dados SQLite
+- [ ] Criar backend Flask com banco de dados 
 - [ ] Implementar modelos de dados (User, Card, Study Session)
 - [ ] Desenvolver APIs REST para CRUD de flashcards
 - [ ] Implementar sistema de autenticação real
