@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Migrado - Sistema de Flashcards</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .hero-bg {
+            background: linear-gradient(135deg, #1e1b4b 0%, #7c3aed 50%, #ec4899 100%);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        .login-form {
+            display: none;
+        }
+        .login-form.active {
+            display: block;
+        }
+        
+        /* Notification System Styles */
+        .notification {
+            transform: translateX(100%);
+            transition: all 0.3s ease-in-out;
+        }
+        .notification.show {
+            transform: translateX(0);
+        }
+        .notification.hide {
+            transform: translateX(100%);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Notification Container -->
+    <div id="notification-container" class="fixed top-4 right-4 z-50 space-y-2 max-w-sm">
+        <!-- Notifications will be dynamically added here -->
+    </div>
+
+    <!-- Homepage -->
+    <div id="homepage" class="page active">
+        <!-- Header -->
+        <header class="bg-white shadow-sm border-b">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center h-16">
+                    <div class="flex items-center">
+                        <i data-lucide="book-open" class="w-8 h-8 text-indigo-600 mr-3"></i>
+                        <h1 class="text-2xl font-bold text-gray-900">Migrado</h1>
+                    </div>
+                    <button onclick="showLogin()" class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors">
+                        Entrar
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="hero-bg text-white py-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-5xl font-bold mb-6">
+                    Bem-vindo ao <span class="text-yellow-400">Migrado!</span>
+                </h2>
+                <p class="text-xl mb-8 text-gray-200 max-w-2xl mx-auto">
+                    Seu sistema completo de estudos por flashcards. Aprenda de forma eficiente e acompanhe seu progresso.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button onclick="showLogin()" class="bg-yellow-400 text-gray-900 px-8 py-3 rounded-lg font-semibold hover:bg-yellow-300 transition-colors">
+                        Começar Agora
+                    </button>
+                    <button class="border border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-gray-900 transition-colors">
+                        Saiba Mais
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="py-16 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                    <div class="text-center">
+                        <div class="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i data-lucide="book-open" class="w-8 h-8 text-blue-600"></i>
+                        </div>
+                        <h3 class="text-3xl font-bold text-gray-900 mb-2">1,250</h3>
+                        <p class="text-gray-600">Cards Estudados</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i data-lucide="trending-up" class="w-8 h-8 text-green-600"></i>
+                        </div>
+                        <h3 class="text-3xl font-bold text-gray-900 mb-2">15</h3>
+                        <p class="text-gray-600">Dias de Sequência</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i data-lucide="users" class="w-8 h-8 text-purple-600"></i>
+                        </div>
+                        <h3 class="text-3xl font-bold text-gray-900 mb-2">89%</h3>
+                        <p class="text-gray-600">Precisão</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="bg-yellow-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i data-lucide="clock" class="w-8 h-8 text-yellow-600"></i>
+                        </div>
+                        <h3 class="text-3xl font-bold text-gray-900 mb-2">45</h3>
+                        <p class="text-gray-600">Min/Dia</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="py-16 bg-gray-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h3 class="text-3xl font-bold text-gray-900 mb-4">Por que escolher o Migrado?</h3>
+                    <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                        Desenvolvido especificamente para estudantes de medicina, com recursos avançados de aprendizado.
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-white p-8 rounded-xl shadow-lg card-hover">
+                        <div class="bg-blue-100 w-12 h-12 rounded-lg flex items-center justify-center mb-6">
+                            <i data-lucide="book-open" class="w-6 h-6 text-blue-600"></i>
+                        </div>
+                        <h4 class="text-xl font-semibold text-gray-900 mb-4">Estude Eficientemente</h4>
+                        <p class="text-gray-600">
+                            Aproveite nossos flashcards otimizados para maximizar sua retenção de conhecimento e acelerar seu aprendizado.
+                        </p>
+                    </div>
+                    
+                    <div class="bg-white p-8 rounded-xl shadow-lg card-hover">
+                        <div class="bg-green-100 w-12 h-12 rounded-lg flex items-center justify-center mb-6">
+                            <i data-lucide="users" class="w-6 h-6 text-green-600"></i>
+                        </div>
+                        <h4 class="text-xl font-semibold text-gray-900 mb-4">Comunidade Ativa</h4>
+                        <p class="text-gray-600">
+                            Conecte-se com outros estudantes de medicina, compartilhe conhecimento e cresça junto com a comunidade.
+                        </p>
+                    </div>
+                    
+                    <div class="bg-white p-8 rounded-xl shadow-lg card-hover">
+                        <div class="bg-purple-100 w-12 h-12 rounded-lg flex items-center justify-center mb-6">
+                            <i data-lucide="trending-up" class="w-6 h-6 text-purple-600"></i>
+                        </div>
+                        <h4 class="text-xl font-semibold text-gray-900 mb-4">Acompanhe seu Progresso</h4>
+                        <p class="text-gray-600">
+                            Gráficos detalhados e estatísticas avançadas para monitorar sua evolução e identificar áreas de melhoria.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="bg-gray-900 text-white py-12">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <div class="flex items-center justify-center mb-4">
+                        <i data-lucide="book-open" class="w-6 h-6 text-indigo-400 mr-2"></i>
+                        <span class="text-lg font-semibold">Migrado</span>
+                    </div>
+                    <p class="text-gray-400 mb-8">
+                        Plataforma completa de estudos por flashcards para estudantes de medicina.
+                    </p>
+                    <div class="border-t border-gray-800 pt-8">
+                        <p class="text-gray-400">© 2025 Migrado. Todos os direitos reservados.</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Login Page -->
+    <div id="loginpage" class="page" style="display: none;">
+        <div class="min-h-screen hero-bg flex items-center justify-center p-4">
+            <!-- Background Pattern -->
+            <div class="absolute inset-0 bg-black opacity-50"></div>
+            <div class="absolute inset-0" style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.1\'%3E%3Ccircle cx=\'30\' cy=\'30\' r=\'2\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
+
+            <!-- Main Container -->
+            <div class="relative z-10 w-full max-w-md">
+                <div class="bg-white rounded-2xl shadow-2xl overflow-hidden">
+                    <!-- Header -->
+                    <div class="bg-gradient-to-r from-indigo-600 to-purple-600 px-8 py-6 text-center">
+                        <h1 class="text-2xl font-bold text-white mb-2" id="form-title">
+                            Bem-vindo de volta!
+                        </h1>
+                        <p class="text-indigo-100 text-sm" id="form-subtitle">
+                            Entre na sua conta para continuar
+                        </p>
+                    </div>
+
+                    <!-- Form -->
+                    <div class="px-8 py-6">
+                        <form id="auth-form" class="space-y-4">
+                            <!-- Name Field (only for register) -->
+                            <div id="name-field" class="space-y-2" style="display: none;">
+                                <label class="text-sm font-medium text-gray-700">Nome completo</label>
+                                <div class="relative">
+                                    <i data-lucide="user" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5"></i>
+                                    <input
+                                        type="text"
+                                        name="name"
+                                        id="name"
+                                        class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200"
+                                        placeholder="Digite seu nome completo"
+                                    />
+                                </div>
+                            </div>
+
+                            <!-- Email Field -->
+                            <div class="space-y-2">
+                                <label class="text-sm font-medium text-gray-700">Email</label>
+                                <div class="relative">
+                                    <i data-lucide="mail" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5"></i>
+                                    <input
+                                        type="email"
+                                        name="email"
+                                        id="email"
+                                        class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200"
+                                        placeholder="Digite seu email"
+                                        required
+                                    />
+                                </div>
+                            </div>
+
+                            <!-- Password Field -->
+                            <div class="space-y-2">
+                                <label class="text-sm font-medium text-gray-700">Senha</label>
+                                <div class="relative">
+                                    <i data-lucide="lock" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5"></i>
+                                    <input
+                                        type="password"
+                                        name="password"
+                                        id="password"
+                                        class="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200"
+                                        placeholder="Digite sua senha"
+                                        required
+                                    />
+                                    <button
+                                        type="button"
+                                        onclick="togglePassword()"
+                                        class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                                    >
+                                        <i data-lucide="eye" id="eye-icon" class="w-5 h-5"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Confirm Password Field (only for register) -->
+                            <div id="confirm-password-field" class="space-y-2" style="display: none;">
+                                <label class="text-sm font-medium text-gray-700">Confirmar senha</label>
+                                <div class="relative">
+                                    <i data-lucide="lock" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5"></i>
+                                    <input
+                                        type="password"
+                                        name="confirmPassword"
+                                        id="confirmPassword"
+                                        class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200"
+                                        placeholder="Confirme sua senha"
+                                    />
+                                </div>
+                            </div>
+
+                            <!-- Forgot Password Link (only for login) -->
+                            <div id="forgot-password" class="text-right">
+                                <a href="#" class="text-sm text-indigo-600 hover:text-indigo-800 transition-colors">
+                                    Esqueceu a senha?
+                                </a>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <button
+                                type="submit"
+                                id="submit-btn"
+                                class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-3 rounded-lg font-semibold hover:from-indigo-700 hover:to-purple-700 transform hover:scale-[1.02] transition-all duration-200 shadow-lg"
+                            >
+                                Entrar
+                            </button>
+                        </form>
+
+                        <!-- Toggle Login/Register -->
+                        <div class="mt-6 text-center">
+                            <p class="text-gray-600 text-sm">
+                                <span id="toggle-text">Não tem uma conta?</span>
+                                <button
+                                    onclick="toggleAuthMode()"
+                                    id="toggle-btn"
+                                    class="ml-2 text-indigo-600 hover:text-indigo-800 font-semibold transition-colors"
+                                >
+                                    Cadastre-se
+                                </button>
+                            </p>
+                        </div>
+
+                        <!-- Back to Home -->
+                        <div class="mt-4 text-center">
+                            <button
+                                onclick="showHome()"
+                                class="text-sm text-gray-500 hover:text-gray-700 transition-colors"
+                            >
+                                ← Voltar ao início
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer -->
+                <div class="text-center mt-6">
+                    <p class="text-white text-sm opacity-75">
+                        © 2025 Migrado. Todos os direitos reservados.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Estado da aplicação
+        let isLogin = true;
+        let isLoggedIn = false;
+        let trialStartTime = null;
+
+        // Inicializar ícones do Lucide
+        document.addEventListener('DOMContentLoaded', function() {
+            lucide.createIcons();
+            
+            // Verificar se há dados de teste salvos
+            const savedTrialStart = localStorage.getItem('trialStartTime');
+            if (savedTrialStart) {
+                trialStartTime = parseInt(savedTrialStart);
+                isLoggedIn = true;
+            }
+        });
+
+        // Sistema de Notificações
+        function showNotification(message, type = 'info', duration = 5000) {
+            const container = document.getElementById('notification-container');
+            const notificationId = 'notification-' + Date.now();
+            
+            // Definir cores baseadas no tipo
+            let bgColor, textColor, iconName;
+            switch(type) {
+                case 'success':
+                    bgColor = 'bg-green-500';
+                    textColor = 'text-white';
+                    iconName = 'check-circle';
+                    break;
+                case 'error':
+                    bgColor = 'bg-red-500';
+                    textColor = 'text-white';
+                    iconName = 'x-circle';
+                    break;
+                case 'warning':
+                    bgColor = 'bg-yellow-500';
+                    textColor = 'text-white';
+                    iconName = 'alert-triangle';
+                    break;
+                case 'trial':
+                    bgColor = 'bg-orange-500';
+                    textColor = 'text-white';
+                    iconName = 'clock';
+                    break;
+                default:
+                    bgColor = 'bg-blue-500';
+                    textColor = 'text-white';
+                    iconName = 'info';
+            }
+            
+            const notification = document.createElement('div');
+            notification.id = notificationId;
+            notification.className = `notification ${bgColor} ${textColor} p-4 rounded-lg shadow-lg flex items-center space-x-3 min-w-80`;
+            
+            notification.innerHTML = `
+                <i data-lucide="${iconName}" class="w-5 h-5 flex-shrink-0"></i>
+                <span class="flex-1">${message}</span>
+                <button onclick="hideNotification('${notificationId}')" class="flex-shrink-0 hover:opacity-75">
+                    <i data-lucide="x" class="w-4 h-4"></i>
+                </button>
+            `;
+            
+            container.appendChild(notification);
+            
+            // Inicializar ícones do Lucide para a nova notificação
+            lucide.createIcons();
+            
+            // Mostrar notificação com animação
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 100);
+            
+            // Auto-remover após duração especificada
+            setTimeout(() => {
+                hideNotification(notificationId);
+            }, duration);
+        }
+
+        function hideNotification(notificationId) {
+            const notification = document.getElementById(notificationId);
+            if (notification) {
+                notification.classList.remove('show');
+                notification.classList.add('hide');
+                setTimeout(() => {
+                    notification.remove();
+                }, 300);
+            }
+        }
+
+        function startTrialPeriod() {
+            trialStartTime = Date.now();
+            localStorage.setItem('trialStartTime', trialStartTime.toString());
+            isLoggedIn = true;
+            showNotification('Período de teste iniciado! Você tem 24 horas para explorar a plataforma.', 'trial', 6000);
+        }
+
+        // Navegação entre páginas
+        function showHome() {
+            document.getElementById('homepage').style.display = 'block';
+            document.getElementById('loginpage').style.display = 'none';
+        }
+
+        function showLogin() {
+            document.getElementById('homepage').style.display = 'none';
+            document.getElementById('loginpage').style.display = 'block';
+        }
+
+        // Toggle entre login e cadastro
+        function toggleAuthMode() {
+            isLogin = !isLogin;
+            
+            const formTitle = document.getElementById('form-title');
+            const formSubtitle = document.getElementById('form-subtitle');
+            const nameField = document.getElementById('name-field');
+            const confirmPasswordField = document.getElementById('confirm-password-field');
+            const forgotPassword = document.getElementById('forgot-password');
+            const submitBtn = document.getElementById('submit-btn');
+            const toggleText = document.getElementById('toggle-text');
+            const toggleBtn = document.getElementById('toggle-btn');
+            
+            if (isLogin) {
+                formTitle.textContent = 'Bem-vindo de volta!';
+                formSubtitle.textContent = 'Entre na sua conta para continuar';
+                nameField.style.display = 'none';
+                confirmPasswordField.style.display = 'none';
+                forgotPassword.style.display = 'block';
+                submitBtn.textContent = 'Entrar';
+                toggleText.textContent = 'Não tem uma conta?';
+                toggleBtn.textContent = 'Cadastre-se';
+            } else {
+                formTitle.textContent = 'Criar conta';
+                formSubtitle.textContent = 'Junte-se a nós hoje mesmo';
+                nameField.style.display = 'block';
+                confirmPasswordField.style.display = 'block';
+                forgotPassword.style.display = 'none';
+                submitBtn.textContent = 'Criar conta';
+                toggleText.textContent = 'Já tem uma conta?';
+                toggleBtn.textContent = 'Faça login';
+            }
+        }
+
+        // Toggle visualização da senha
+        function togglePassword() {
+            const passwordField = document.getElementById('password');
+            const eyeIcon = document.getElementById('eye-icon');
+            
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                eyeIcon.setAttribute('data-lucide', 'eye-off');
+            } else {
+                passwordField.type = 'password';
+                eyeIcon.setAttribute('data-lucide', 'eye');
+            }
+            
+            lucide.createIcons();
+        }
+
+        // Submissão do formulário
+        document.getElementById('auth-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData);
+            
+            // Validações básicas
+            if (!isLogin) {
+                if (data.password !== data.confirmPassword) {
+                    showNotification('As senhas não coincidem!', 'error');
+                    return;
+                }
+                if (data.password.length < 6) {
+                    showNotification('A senha deve ter pelo menos 6 caracteres!', 'error');
+                    return;
+                }
+            }
+            
+            // Simular processo de autenticação
+            setTimeout(() => {
+                if (isLogin) {
+                    showNotification('Login realizado com sucesso! Bem-vindo de volta!', 'success');
+                } else {
+                    showNotification('Conta criada com sucesso! Bem-vindo ao Migrado!', 'success');
+                }
+                
+                // Iniciar período de teste
+                if (!isLoggedIn) {
+                    setTimeout(() => {
+                        startTrialPeriod();
+                    }, 1000);
+                }
+                
+                // Voltar para homepage após 2 segundos
+                setTimeout(() => {
+                    showHome();
+                }, 2000);
+                
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
+
