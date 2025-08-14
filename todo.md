@@ -17,9 +17,9 @@
 - [x] Adicionar animações e micro-interações na tela de login.
 - [x] Implementar validação visual de formulários.
 - [x] Adicionar toggle de visualização de senha.
-- [ ] Configurar período de teste gratuito de 24 horas.
-- [ ] Implementar sistema de níveis de acesso (usuário e administrador).
-- [ ] Adicionar contador de tempo de teste no topo do site.
+- [x] Configurar período de teste gratuito de 24 horas.
+- [x] Implementar sistema de níveis de acesso (usuário e administrador).
+- [x] Adicionar contador de tempo de teste no topo do site.
 
 ### Fase 4: Desenvolvimento da interface moderna com glassmorphism
 - [ ] Redesenhar a página inicial com design glassmorphism.
